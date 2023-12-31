@@ -18,7 +18,7 @@ jobs:
           distribution: adopt
       
       - name: Build, test and package project
-        working-directory: ./content-service
+        working-directory: ././content-service
         run: mvn package -DskipTests
 
       - name: Docker login
@@ -44,7 +44,7 @@ jobs:
           distribution: adopt
 
       - name: Build, test and package project
-        working-directory: ./reservation-service
+        working-directory: ././reservation-service
         run: mvn package -DskipTests
 
       - name: Docker login
@@ -70,7 +70,7 @@ jobs:
           distribution: adopt
         
       - name: Build, test and package project
-        working-directory: ./classroom-service
+        working-directory: ././classroom-service
         run: mvn package -DskipTests
         
       - name: Docker login
