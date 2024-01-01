@@ -1,0 +1,74 @@
+services:
+ mongo-content:
+  image: mongo:latest
+  ports:
+    - 27017:27017
+  volumes:
+    - mongodb_content_data:/data/db
+    
+ mysql-classroom:
+  image: mysql:latest
+  ports:
+    - 3306:3306
+  volumes:
+    - mysql_classroom_data:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: abc123
+    
+ mysql-reservation:
+  image: mysql:latest
+  ports:
+    - 3307:3306
+  volumes:
+    - mysql_reservation_data:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: abc123
+    
+ content-service:
+  depends_on:
+    - mongo-content
+  image: r0778068/content-service
+  ports:
+    - 8080:8080
+  links:
+    - mongo-content
+  environment:
+   MONGODB_PORT: 27017
+   MONGODB_HOST: mongo-content
+   
+ reservation-service:
+  depends_on:
+    - mysql-reservation
+  image: r0778068/reservation-service
+  ports:
+    - 8082:8082
+  links:
+    - mysql-reservation
+  environment:
+   MYSQL_DB_USERNAME: root
+   MYSQL_DB_PASSWORD: abc123
+   MYSQL_DB_HOST: mysql-reservation
+   MYSQL_DB_PORT: 3306
+
+ classroom-service:
+  depends_on:
+    - content-service
+    - reservation-service
+  image: r0778068/classroom-service
+  ports:
+    - 8081:8081
+  links:
+    - content-service
+    - reservation-service
+  environment:
+   CONTENT_SERVICE_BASEURL: content-service:8080
+   RESERVATION_SERVICE_BASEURL: reservation-service:8082
+   MYSQL_DB_USERNAME: root
+   MYSQL_DB_PASSWORD: abc123
+   MYSQL_DB_HOST: mysql-classroom
+   MYSQL_DB_PORT: 3306
+
+volumes:
+ mongodb_content_data:
+ mysql_reservation_data:
+ mysql_classroom_data:
