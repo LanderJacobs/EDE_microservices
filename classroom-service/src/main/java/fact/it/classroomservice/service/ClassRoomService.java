@@ -83,9 +83,7 @@ public class ClassRoomService {
 
             return classRoomResponse;
         } catch (Exception e) {
-            ClassRoomResponse test = new ClassRoomResponse();
-            test.setRoomName(e.toString());
-            return test;
+            return null;
         }
     }
 
