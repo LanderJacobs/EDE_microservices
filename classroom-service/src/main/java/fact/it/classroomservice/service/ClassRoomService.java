@@ -67,7 +67,7 @@ public class ClassRoomService {
             classRoomResponse.setItAccessible(content.isBeamer() && content.getOutletAmount() >= 20);
 
             ReservationResponse[] reservationArray = webClient.get()
-                    .uri("http://" + reservationServiceBaseUrl + "/api/reservation/allbyroomname",
+                    .uri("http://" + reservationServiceBaseUrl + "/api/reservation/allbyroomname/",
                             uriBuilder -> uriBuilder.queryParam("roomname", roomName).build())
                     .retrieve()
                     .bodyToMono(ReservationResponse[].class)
