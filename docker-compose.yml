@@ -9,7 +9,7 @@ services:
  mysql-classroom:
   image: mysql:latest
   ports:
-    - 3306:3306
+    - 3308:3306
   volumes:
     - mysql_classroom_data:/var/lib/mysql
   environment:
@@ -54,12 +54,14 @@ services:
   depends_on:
     - content-service
     - reservation-service
+    - mysql-classroom
   image: r0778068/classroom-service
   ports:
     - 8081:8081
   links:
     - content-service
     - reservation-service
+    - mysql-classroom
   environment:
    CONTENT_SERVICE_BASEURL: content-service:8080
    RESERVATION_SERVICE_BASEURL: reservation-service:8082
