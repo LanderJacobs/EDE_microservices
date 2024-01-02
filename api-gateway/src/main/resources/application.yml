@@ -15,7 +15,7 @@ spring:
         - id: content-service
           uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/content
+            - Path=/content/
             - Method=GET
             - Query=roomname
           filters:
@@ -37,17 +37,19 @@ spring:
         - id: content-service-delete
           uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/content/{roomname}
+            - Path=/content/
             - Method=DELETE
+            - Query=roomname
           filters:
-            - SetPath=/api/content/delete/{roomname}
+            - SetPath=/api/content/delete/
         - id: reservation-service-allbyname
           uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
           predicates:
-            - Path=/reservations/{roomname}
+            - Path=/reservations/
             - Method=GET
+            - Query=roomname
           filters:
-            - SetPath=/api/reservation/allbyroomname/{roomname}
+            - SetPath=/api/reservation/allbyroomname/
         - id: reservation-service-all
           uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
           predicates:
@@ -65,24 +67,27 @@ spring:
         - id: reservation-service-delete
           uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
           predicates:
-            - Path=/reservation/{id}
+            - Path=/reservation/
             - Method=DELETE
+            - Query=id
           filters:
-            - SetPath=/api/reservation/delete/{id}
+            - SetPath=/api/reservation/delete/
         - id: reservation-service-deleteall
           uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
           predicates:
-            - Path=/reservations/{roomname}
+            - Path=/reservations/
             - Method=DELETE
+            - Query=roomname
           filters:
-            - SetPath=/api/reservation/deleteall/{roomname}
+            - SetPath=/api/reservation/deleteall/
         - id: classroom-service
           uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
           predicates:
-            - Path=/classroom/{classroom}
+            - Path=/classroom/
             - Method=GET
+            - Query=roomname
           filters:
-            - SetPath=/api/classroom/{classroom}
+            - SetPath=/api/classroom/
         - id: classroom-service-all
           uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
           predicates:
@@ -100,7 +105,8 @@ spring:
         - id: classroom-service-delete
           uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
           predicates:
-            - Path=/classroom/{classroom}
+            - Path=/classroom/
             - Method=DELETE
+            - Query=roomname
           filters:
-            - SetPath=/api/classroom/delete/{classroom}
+            - SetPath=/api/classroom/delete/
