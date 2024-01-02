@@ -15,10 +15,11 @@ spring:
         - id: content-service
           uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
           predicates:
-            - Path=/content/{roomname}
+            - Path=/content
             - Method=GET
+            - Query=roomname
           filters:
-            - SetPath=/api/content/{roomname}
+            - SetPath=/api/content/
         - id: content-service-post
           uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
           predicates:
