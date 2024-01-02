@@ -18,7 +18,7 @@ spring:
             - Path=/content/{roomname}
             - Method=GET
           filters:
-            - SetPath=/api/content?roomname={roomname}
+            - SetPath=/api/content/{roomname}
         - id: content-service-post
           uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
           predicates:
@@ -39,14 +39,14 @@ spring:
             - Path=/content/{roomname}
             - Method=DELETE
           filters:
-            - SetPath=/api/content/delete{roomname}
+            - SetPath=/api/content/delete/{roomname}
         - id: reservation-service-allbyname
           uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
           predicates:
             - Path=/reservations/{roomname}
             - Method=GET
           filters:
-            - SetPath=/api/reservation/allbyroomname{roomname}
+            - SetPath=/api/reservation/allbyroomname/{roomname}
         - id: reservation-service-all
           uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
           predicates:
@@ -67,14 +67,14 @@ spring:
             - Path=/reservation/{id}
             - Method=DELETE
           filters:
-            - SetPath=/api/reservation/delete{id}
+            - SetPath=/api/reservation/delete/{id}
         - id: reservation-service-deleteall
           uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
           predicates:
             - Path=/reservations/{roomname}
             - Method=DELETE
           filters:
-            - SetPath=/api/reservation/deleteall{roomname}
+            - SetPath=/api/reservation/deleteall/{roomname}
         - id: classroom-service
           uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
           predicates:
@@ -102,4 +102,4 @@ spring:
             - Path=/classroom/{classroom}
             - Method=DELETE
           filters:
-            - SetPath=/api/classroom/delete{classroom}
+            - SetPath=/api/classroom/delete/{classroom}

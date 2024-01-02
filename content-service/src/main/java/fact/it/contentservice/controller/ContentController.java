@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class ContentController {
     private final ContentService contentService;
 
-    @GetMapping
+    @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public ContentResponse getContentOfRoom(@RequestParam String roomname){
         return contentService.getContentOfRoom(roomname);
@@ -25,7 +25,7 @@ public class ContentController {
         contentService.createContent(contentRequest);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/")
     @ResponseStatus(HttpStatus.OK)
     public void deleteContent(@RequestParam String roomname){
         contentService.deleteContent(roomname);

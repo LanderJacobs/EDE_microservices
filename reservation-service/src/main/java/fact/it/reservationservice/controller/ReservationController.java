@@ -22,7 +22,7 @@ public class ReservationController {
         return reservationService.getAllReservations();
     }
 
-    @GetMapping("/allbyroomname")
+    @GetMapping("/allbyroomname/")
     @ResponseStatus(HttpStatus.OK)
     public List<ReservationResponse> getAllByRoomName(@RequestParam String roomname){
         return reservationService.getAllReservationsByRoomName(roomname);
@@ -34,14 +34,14 @@ public class ReservationController {
         reservationService.createReservation(reservationRequest);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/")
     @ResponseStatus(HttpStatus.OK)
     public void deleteReservation(@RequestParam String id){
         Long reservationId = Long.parseLong(id);
         reservationService.deleteReservation(reservationId);
     }
 
-    @DeleteMapping("/deleteall")
+    @DeleteMapping("/deleteall/")
     @ResponseStatus(HttpStatus.OK)
     public void deleteReservations(@RequestParam String roomname){
         reservationService.deleteReservations(roomname);

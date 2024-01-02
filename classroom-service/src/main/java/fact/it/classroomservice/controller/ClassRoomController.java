@@ -17,7 +17,7 @@ public class ClassRoomController {
 
     private final ClassRoomService classRoomService;
 
-    @GetMapping
+    @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public ClassRoomResponse getRoom(@RequestParam String roomname){
         return classRoomService.getClassRoom(roomname);
@@ -35,7 +35,7 @@ public class ClassRoomController {
         classRoomService.createClassRoom(classRoomRequest);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/")
     @ResponseStatus(HttpStatus.OK)
     public void deleteClassRoom(@RequestParam String roomname){
         classRoomService.deleteClassRoom(roomname);
