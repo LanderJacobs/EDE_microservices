@@ -58,7 +58,7 @@ public class ClassRoomService {
             classRoomResponse.setBuilding(classRoom.getBuilding());
 
             ContentResponse content = webClient.get()
-                    .uri("http://" + contentServiceBaseUrl + "/api/content",
+                    .uri("http://" + contentServiceBaseUrl + "/api/content/",
                             uriBuilder -> uriBuilder.queryParam("roomname", roomName).build())
                     .retrieve()
                     .bodyToMono(ContentResponse.class)
