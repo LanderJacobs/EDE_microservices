@@ -60,7 +60,7 @@ spring:
         - id: reservation-service-post
           uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
           predicates:
-            - Path=/reservation
+            - Path=/reservation/
             - Method=POST
           filters:
             - SetPath=/api/reservation/create
