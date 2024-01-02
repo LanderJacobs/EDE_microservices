@@ -1,105 +1,105 @@
 server:
   port: 8083
 
-  logging:
-    level:
-      root: INFO
-      org.springframework.cloud.gateway: TRACE
-      org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
-      reactor.netty: TRACE
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+    reactor.netty: TRACE
 
-  spring:
-    cloud:
-      gateway:
-        routes:
-          - id: content-service
-            uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
-            predicates:
-              - Path=/content/{roomname}
-              - Method=GET
-            filters:
-              - SetPath=/api/content{roomname}
-          - id: content-service-post
-            uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
-            predicates:
-              - Path=/content
-              - Method=POST
-            filters:
-              - SetPath=/api/content/create
-          - id: content-service-put
-            uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
-            predicates:
-              - Path=/content
-              - Method=PUT
-            filters:
-              - SetPath=/api/content/update
-          - id: content-service-delete
-            uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
-            predicates:
-              - Path=/content/{roomname}
-              - Method=DELETE
-            filters:
-              - SetPath=/api/content/delete{roomname}
-          - id: reservation-service-allbyname
-            uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
-            predicates:
-              - Path=/reservations/{roomname}
-              - Method=GET
-            filters:
-              - SetPath=/api/reservation/allbyroomname{roomname}
-          - id: reservation-service-all
-            uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
-            predicates:
-              - Path=/reservations
-              - Method=GET
-            filters:
-              - SetPath=/api/reservation
-          - id: reservation-service-post
-            uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
-            predicates:
-              - Path=/reservation
-              - Method=POST
-            filters:
-              - SetPath=/api/reservation/create
-          - id: reservation-service-delete
-            uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
-            predicates:
-              - Path=/reservation/{id}
-              - Method=DELETE
-            filters:
-              - SetPath=/api/reservation/delete{id}
-          - id: reservation-service-deleteall
-            uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
-            predicates:
-              - Path=/reservations/{roomname}
-              - Method=DELETE
-            filters:
-              - SetPath=/api/reservation/deleteall{roomname}
-          - id: classroom-service
-            uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
-            predicates:
-              - Path=/classroom/{classroom}
-              - Method=GET
-            filters:
-              - SetPath=/api/classroom/{classroom}
-          - id: classroom-service-all
-            uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
-            predicates:
-              - Path=/classrooms
-              - Method=GET
-            filters:
-              - SetPath=/api/classroom/all
-          - id: classroom-service-create
-            uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
-            predicates:
-              - Path=/classroom
-              - Method=POST
-            filters:
-              - SetPath=/api/classroom/create
-          - id: classroom-service-delete
-            uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
-            predicates:
-              - Path=/classroom/{classroom}
-              - Method=DELETE
-            filters:
-              - SetPath=/api/classroom/delete{classroom}
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: content-service
+          uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/content/{roomname}
+            - Method=GET
+          filters:
+            - SetPath=/api/content{roomname}
+        - id: content-service-post
+          uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/content
+            - Method=POST
+          filters:
+            - SetPath=/api/content/create
+        - id: content-service-put
+          uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/content
+            - Method=PUT
+          filters:
+            - SetPath=/api/content/update
+        - id: content-service-delete
+          uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/content/{roomname}
+            - Method=DELETE
+          filters:
+            - SetPath=/api/content/delete{roomname}
+        - id: reservation-service-allbyname
+          uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/reservations/{roomname}
+            - Method=GET
+          filters:
+            - SetPath=/api/reservation/allbyroomname{roomname}
+        - id: reservation-service-all
+          uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/reservations
+            - Method=GET
+          filters:
+            - SetPath=/api/reservation
+        - id: reservation-service-post
+          uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/reservation
+            - Method=POST
+          filters:
+            - SetPath=/api/reservation/create
+        - id: reservation-service-delete
+          uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/reservation/{id}
+            - Method=DELETE
+          filters:
+            - SetPath=/api/reservation/delete{id}
+        - id: reservation-service-deleteall
+          uri: http://${RESERVATION_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/reservations/{roomname}
+            - Method=DELETE
+          filters:
+            - SetPath=/api/reservation/deleteall{roomname}
+        - id: classroom-service
+          uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/classroom/{classroom}
+            - Method=GET
+          filters:
+            - SetPath=/api/classroom/{classroom}
+        - id: classroom-service-all
+          uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/classrooms
+            - Method=GET
+          filters:
+            - SetPath=/api/classroom/all
+        - id: classroom-service-create
+          uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/classroom
+            - Method=POST
+          filters:
+            - SetPath=/api/classroom/create
+        - id: classroom-service-delete
+          uri: http://${CLASSROOM_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/classroom/{classroom}
+            - Method=DELETE
+          filters:
+            - SetPath=/api/classroom/delete{classroom}
