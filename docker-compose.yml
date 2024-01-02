@@ -69,6 +69,23 @@ services:
    MYSQL_DB_PASSWORD: abc123
    MYSQL_DB_HOST: mysql-classroom
    MYSQL_DB_PORT: 3306
+  
+  api-gateway:
+   depends_on:
+     - content-service
+     - classroom-service
+     - reservation-service
+   image: r0778068/school-api-gateway
+   ports:
+     - 8083:8083
+   links:
+     - content-service
+     - classroom-service
+     - reservation-service
+   environment:
+     CONTENT_SERVICE_BASEURL: content-service:8080
+     CLASSROOM_SERVICE_BASEURL: classroom-service:8081
+     RESERVATION_SERVICE_BASEURL: reservation-service:8082
 
 volumes:
  mongodb_content_data:
