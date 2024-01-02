@@ -18,7 +18,7 @@ spring:
             - Path=/content/{roomname}
             - Method=GET
           filters:
-            - SetPath=/api/content{roomname}
+            - SetPath=/api/content?roomname={roomname}
         - id: content-service-post
           uri: http://${CONTENT_SERVICE_BASEURL:localhost:8080}
           predicates:
