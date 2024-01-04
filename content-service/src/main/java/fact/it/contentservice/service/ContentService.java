@@ -50,6 +50,11 @@ public class ContentService {
                     .functionality(contentRequest.getFunctionality())
                     .build();
 
+            Content test = contentRepository.findFirstByRoomName(contentRequest.getRoomName());
+            if (test != null){
+                return "The content for this room already exists";
+            }
+
             contentRepository.save(content);
             return "Your content was added.";
         } catch (Exception e) {

@@ -59,7 +59,7 @@ public class ClassRoomService {
 
             ContentResponse content = webClient.get()
                     .uri("http://" + contentServiceBaseUrl + "/api/content/",
-                            uriBuilder -> uriBuilder.queryParam("roomname", roomName).build())
+                            uriBuilder -> uriBuilder.queryParam("roomname", classRoomResponse.getRoomName()).build())
                     .retrieve()
                     .bodyToMono(ContentResponse.class)
                     .block();
@@ -68,7 +68,7 @@ public class ClassRoomService {
 
             ReservationResponse[] reservationArray = webClient.get()
                     .uri("http://" + reservationServiceBaseUrl + "/api/reservation/allbyroomname/",
-                            uriBuilder -> uriBuilder.queryParam("roomname", roomName).build())
+                            uriBuilder -> uriBuilder.queryParam("roomname", classRoomResponse.getRoomName()).build())
                     .retrieve()
                     .bodyToMono(ReservationResponse[].class)
                     .block();
@@ -76,8 +76,10 @@ public class ClassRoomService {
             classRoomResponse.setAvailable(true);
 
             for (ReservationResponse x : reservationArray){
-                if (x.getDateReservation().equals(LocalDate.now()) && x.getStartTime().isBefore(LocalTime.now()) && x.getEndTime().isAfter(LocalTime.now())){
-                    classRoomResponse.setAvailable(false);
+                if (x.getDateReservation().equals(LocalDate.now())){
+                    if (x.getStartTime().isBefore(LocalTime.now()) && x.getEndTime().isAfter(LocalTime.now())){
+                        classRoomResponse.setAvailable(false);
+                    }
                 }
             }
 
@@ -98,6 +100,12 @@ public class ClassRoomService {
             ClassRoom classRoom = new ClassRoom();
             classRoom.setRoomName(classRoomRequest.getRoomName());
             classRoom.setBuilding(classRoomRequest.getBuilding());
+
+            Optional<ClassRoom> test = classRoomRepository.findFirstByRoomName(classRoomRequest.getRoomName());
+            if (test.isPresent()){
+                return "This classroom already exists";
+            }
+
             classRoomRepository.save(classRoom);
             return "Your classroom was added.";
         } catch (Exception e) {
