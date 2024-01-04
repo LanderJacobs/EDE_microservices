@@ -30,20 +30,20 @@ public class ReservationController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.OK)
-    public void createReservation(@RequestBody ReservationRequest reservationRequest){
-        reservationService.createReservation(reservationRequest);
+    public String createReservation(@RequestBody ReservationRequest reservationRequest){
+        return reservationService.createReservation(reservationRequest);
     }
 
     @DeleteMapping("/delete/")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteReservation(@RequestParam String id){
+    public String deleteReservation(@RequestParam String id){
         Long reservationId = Long.parseLong(id);
-        reservationService.deleteReservation(reservationId);
+        return reservationService.deleteReservation(reservationId);
     }
 
     @DeleteMapping("/deleteall/")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteReservations(@RequestParam String roomname){
-        reservationService.deleteReservations(roomname);
+    public String deleteReservations(@RequestParam String roomname){
+        return reservationService.deleteReservations(roomname);
     }
 }

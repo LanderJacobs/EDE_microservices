@@ -31,13 +31,13 @@ public class ClassRoomController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.OK)
-    public void createClassRoom(@RequestBody ClassRoomRequest classRoomRequest){
-        classRoomService.createClassRoom(classRoomRequest);
+    public String createClassRoom(@RequestBody ClassRoomRequest classRoomRequest){
+        return classRoomService.createClassRoom(classRoomRequest);
     }
 
     @DeleteMapping("/delete/")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteClassRoom(@RequestParam String roomname){
-        classRoomService.deleteClassRoom(roomname);
+    public String deleteClassRoom(@RequestParam String roomname){
+        return classRoomService.deleteClassRoom(roomname);
     }
 }

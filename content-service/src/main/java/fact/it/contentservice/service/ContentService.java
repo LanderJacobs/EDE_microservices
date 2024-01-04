@@ -41,32 +41,53 @@ public class ContentService {
         return mapToContentResponse(content);
     }
 
-    public void createContent(ContentRequest contentRequest){
-        Content content = Content.builder()
-                .roomName(contentRequest.getRoomName())
-                .outletAmount(contentRequest.getOutletAmount())
-                .beamer(contentRequest.isBeamer())
-                .functionality(contentRequest.getFunctionality())
-                .build();
+    public String createContent(ContentRequest contentRequest){
+        try {
+            Content content = Content.builder()
+                    .roomName(contentRequest.getRoomName())
+                    .outletAmount(contentRequest.getOutletAmount())
+                    .beamer(contentRequest.isBeamer())
+                    .functionality(contentRequest.getFunctionality())
+                    .build();
 
-        contentRepository.save(content);
-    }
-
-    public void deleteContent(String roomName){
-        Content content = contentRepository.findFirstByRoomName(roomName);
-        if (content != null){
-            contentRepository.deleteById(content.getId());
+            contentRepository.save(content);
+            return "Your content was added.";
+        } catch (Exception e) {
+            return "Your content wasn't added.";
         }
     }
 
-    public void updateContent(ContentRequest contentRequest){
-        Content content = contentRepository.findFirstByRoomName(contentRequest.getRoomName());
+    public String deleteContent(String roomName){
+        try {
+            Content content = contentRepository.findFirstByRoomName(roomName);
+            if (content != null){
+                contentRepository.deleteById(content.getId());
+                return "The content was deleted.";
+            } else {
+                return "Couldn't find this content.";
+            }
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
 
-        content.setBeamer(contentRequest.isBeamer());
-        content.setFunctionality(contentRequest.getFunctionality());
-        content.setOutletAmount(contentRequest.getOutletAmount());
+    public String updateContent(ContentRequest contentRequest){
+        try {
+            Content content = contentRepository.findFirstByRoomName(contentRequest.getRoomName());
 
-        contentRepository.save(content);
+            if (content != null){
+                content.setBeamer(contentRequest.isBeamer());
+                content.setFunctionality(contentRequest.getFunctionality());
+                content.setOutletAmount(contentRequest.getOutletAmount());
+
+                contentRepository.save(content);
+                return "Updated your content";
+            } else {
+                return "Couldn't find the original content to update.";
+            }
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
     private ContentResponse mapToContentResponse(Content content){

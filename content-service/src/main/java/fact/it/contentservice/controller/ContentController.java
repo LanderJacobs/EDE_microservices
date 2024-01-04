@@ -21,19 +21,19 @@ public class ContentController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.OK)
-    public void createContent(@RequestBody ContentRequest contentRequest) {
-        contentService.createContent(contentRequest);
+    public String createContent(@RequestBody ContentRequest contentRequest) {
+        return contentService.createContent(contentRequest);
     }
 
     @DeleteMapping("/delete/")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteContent(@RequestParam String roomname){
-        contentService.deleteContent(roomname);
+    public String deleteContent(@RequestParam String roomname){
+        return contentService.deleteContent(roomname);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public void updateContent(@RequestBody ContentRequest contentRequest){
-        contentService.updateContent(contentRequest);
+    public String updateContent(@RequestBody ContentRequest contentRequest){
+        return contentService.updateContent(contentRequest);
     }
 }

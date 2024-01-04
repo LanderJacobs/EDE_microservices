@@ -59,28 +59,66 @@ public class ReservationService {
         return reservations.stream().map(this::mapToReservationResponse).toList();
     }
 
-    public void createReservation(ReservationRequest reservationRequest) {
-        Reservation reservation = new Reservation();
-        reservation.setRoomName(reservationRequest.getRoomName());
-        reservation.setBooker(reservationRequest.getBooker());
-        reservation.setDateReservation(reservationRequest.getDateReservation());
-        reservation.setStartTime(reservationRequest.getStartTime());
-        reservation.setEndTime(reservationRequest.getEndTime());
+    public String createReservation(ReservationRequest reservationRequest) {
+        try {
+            Reservation reservation = new Reservation();
+            reservation.setRoomName(reservationRequest.getRoomName());
+            reservation.setBooker(reservationRequest.getBooker());
+            reservation.setDateReservation(reservationRequest.getDateReservation());
+            reservation.setStartTime(reservationRequest.getStartTime());
+            reservation.setEndTime(reservationRequest.getEndTime());
 
-        reservationRepository.save(reservation);
-    }
+            List<Reservation> reservations = reservationRepository.findAllByRoomName(reservationRequest.getRoomName());
 
-    public void deleteReservation(long id){
-        Optional<Reservation> reservation = reservationRepository.findById(id);
-        if (reservation.isPresent()){
-            reservationRepository.deleteById(id);
+            for (Reservation x : reservations){
+                if (x.getDateReservation().equals(reservation.getDateReservation())){
+                    if (x.getStartTime().isBefore(reservation.getStartTime()) && x.getEndTime().isAfter(reservation.getEndTime())){
+                        return "The timing of your reservation is during another reservation.";
+                    }
+                    if (x.getStartTime().isAfter(reservation.getStartTime()) && x.getEndTime().isBefore(reservation.getEndTime())){
+                        return "There is another reservation during your reservation.";
+                    }
+                    if (x.getStartTime().isAfter(reservation.getStartTime()) && x.getStartTime().isBefore(reservation.getEndTime())){
+                        return "Your timing is conflicting with another reservation.";
+                    }
+                    if (x.getEndTime().isAfter(reservation.getStartTime()) && x.getEndTime().isBefore(reservation.getEndTime())){
+                        return "Your timing is conflicting with another reservation.";
+                    }
+                }
+            }
+
+            reservationRepository.save(reservation);
+            return "You have reserved this room";
+        } catch (Exception e) {
+            return e.getMessage();
         }
     }
 
-    public void deleteReservations(String roomName){
-        List<Reservation> reservations = reservationRepository.findAllByRoomName(roomName);
-        if (reservations != null){
-            reservationRepository.deleteAllByRoomName(roomName);
+    public String deleteReservation(long id){
+        try {
+            Optional<Reservation> reservation = reservationRepository.findById(id);
+            if (reservation.isPresent()){
+                reservationRepository.deleteById(id);
+                return "You have deleted this reservation.";
+            } else {
+                return "Could not find this reservation";
+            }
+        } catch (Exception e){
+            return e.getMessage();
+        }
+    }
+
+    public String deleteReservations(String roomName){
+        try {
+            List<Reservation> reservations = reservationRepository.findAllByRoomName(roomName);
+            if (reservations != null){
+                reservationRepository.deleteAllByRoomName(roomName);
+                return "You have deleted these reservations";
+            } else {
+                return "Could not find these reservations";
+            }
+        } catch (Exception e) {
+            return e.getMessage();
         }
     }
 

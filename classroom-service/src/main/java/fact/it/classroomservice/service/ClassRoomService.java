@@ -93,17 +93,29 @@ public class ClassRoomService {
                 .map(this::mapToClassRoomsResponse).toList();
     }
 
-    public void createClassRoom(ClassRoomRequest classRoomRequest){
-        ClassRoom classRoom = new ClassRoom();
-        classRoom.setRoomName(classRoomRequest.getRoomName());
-        classRoom.setBuilding(classRoomRequest.getBuilding());
-        classRoomRepository.save(classRoom);
+    public String createClassRoom(ClassRoomRequest classRoomRequest){
+        try {
+            ClassRoom classRoom = new ClassRoom();
+            classRoom.setRoomName(classRoomRequest.getRoomName());
+            classRoom.setBuilding(classRoomRequest.getBuilding());
+            classRoomRepository.save(classRoom);
+            return "Your classroom was added.";
+        } catch (Exception e) {
+            return "Your classroom wasn't added.";
+        }
     }
 
-    public void deleteClassRoom(String roomName) {
-        Optional<ClassRoom> classRoom = classRoomRepository.findFirstByRoomName(roomName);
-        if (classRoom.isPresent()){
-            classRoomRepository.deleteById(classRoom.get().getId());
+    public String deleteClassRoom(String roomName) {
+        try {
+            Optional<ClassRoom> classRoom = classRoomRepository.findFirstByRoomName(roomName);
+            if (classRoom.isPresent()){
+                classRoomRepository.deleteById(classRoom.get().getId());
+                return "This classroom was added.";
+            } else {
+                return "Couldn't find this classroom.";
+            }
+        } catch (Exception e) {
+            return e.getMessage();
         }
     }
 
