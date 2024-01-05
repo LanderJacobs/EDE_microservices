@@ -118,7 +118,7 @@ public class ClassRoomService {
             Optional<ClassRoom> classRoom = classRoomRepository.findFirstByRoomName(roomName);
             if (classRoom.isPresent()){
                 classRoomRepository.deleteById(classRoom.get().getId());
-                return "This classroom was added.";
+                return "This classroom was deleted.";
             } else {
                 return "Couldn't find this classroom.";
             }

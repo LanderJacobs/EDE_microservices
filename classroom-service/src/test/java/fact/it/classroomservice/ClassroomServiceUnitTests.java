@@ -164,7 +164,7 @@ public class ClassroomServiceUnitTests {
         String result = classRoomService.deleteClassRoom(roomName);
 
         // Assert
-        assertEquals("This classroom was added.", result);
+        assertEquals("This classroom was deleted.", result);
         verify(classRoomRepository, times(1)).deleteById(classRoom.getId());
     }
 
