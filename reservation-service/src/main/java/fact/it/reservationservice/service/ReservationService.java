@@ -84,6 +84,9 @@ public class ReservationService {
                     if (x.getEndTime().isAfter(reservation.getStartTime()) && x.getEndTime().isBefore(reservation.getEndTime())){
                         return "Your timing is conflicting with another reservation.";
                     }
+                    if (x.getStartTime().equals(reservation.getStartTime()) && x.getEndTime().equals(reservation.getEndTime())){
+                        return "There already exists a reservation for this classroom for these exact hours.";
+                    }
                 }
             }
 
